@@ -6,8 +6,8 @@ import data.DataHelper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
+import page.CreditPage;
 import page.MainPage;
-import page.PaymentPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,12 +23,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 
 
-public class PaymentByCardTests {
+public class PaymentByCreditTests {
 
     private  WebDriver driver;
 
     MainPage mainPage;
-    PaymentPage paymentPage;
+    CreditPage creditPage;
 
     @BeforeAll
     static void setUpAll() {
@@ -43,7 +43,7 @@ public class PaymentByCardTests {
     }
 
     @BeforeEach
-    void shouldOpenWeb() {
+    void shouldCleanDataBaseAndOpenWeb() {
         // driver = new ChromeDriver();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-dev-shm-usage");
@@ -52,7 +52,7 @@ public class PaymentByCardTests {
         driver = new ChromeDriver(options);
         DataBaseHelper.cleanDataBase();
         mainPage = open("http://localhost:8080", MainPage.class);
-        paymentPage = mainPage.buyWithoutCredit();
+        creditPage = mainPage.buyWithCredit();
     }
 
     @AfterAll
@@ -66,7 +66,6 @@ public class PaymentByCardTests {
         driver = null;
     }
 
-
     @DisplayName("Покупка тура с вводом валидных данных картой со статусом approved")
     @Test// №1
     void shouldApproveFirstCard() {
@@ -75,10 +74,10 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.expectApprovalFromBank();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.expectApprovalFromBank();
         var expected = DataHelper.getFirstCardExpectedStatus();
-        var actual = DataBaseHelper.getStatusPaymentWithoutCredit();
+        var actual = DataBaseHelper.getStatusPaymentWithCredit();
         assertEquals(expected, actual);
     }
 
@@ -90,10 +89,10 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.expectRejectionFromBank();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.expectRejectionFromBank();
         var expected = DataHelper.getSecondCardExpectedStatus();
-        var actual = DataBaseHelper.getStatusPaymentWithoutCredit();
+        var actual = DataBaseHelper.getStatusPaymentWithCredit();
         Assertions.assertEquals(expected, actual);
     }
 
@@ -107,8 +106,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitNecessaryFillOutField();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitNecessaryFillOutField();
     }
 
     @DisplayName("Покупка тура при вводе в поле номер карты текста")
@@ -119,8 +118,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле номер карты неполных данных")
@@ -131,8 +130,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getIncompleteYear();
         var owner = DataHelper.getIncompleteOwner();
         var cvc = DataHelper.getIncompleteCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitNecessaryFillOutField();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitNecessaryFillOutField();
     }
 
     @DisplayName("Покупка тура при вводе в поле номер карты нулей")
@@ -143,8 +142,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле номер карты одинаковых цифр")
@@ -155,8 +154,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.expectRejectionFromBank();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.expectRejectionFromBank();
     }
 
     @DisplayName("Покупка тура при вводе в поле номер карты только 4 цифр")
@@ -167,8 +166,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле номер карты 17 цифр")
@@ -179,8 +178,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.expectApprovalFromBank();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.expectApprovalFromBank();
     }
 
     // Проверка поля "Дата"
@@ -193,8 +192,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitNecessaryFillOutField();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitNecessaryFillOutField();
     }
 
     @DisplayName("Отправка пустой формы поля год")
@@ -205,8 +204,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getEmptyValue();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitNecessaryFillOutField();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitNecessaryFillOutField();
     }
 
     @DisplayName("Ввод невалидного значения в поле месяц")
@@ -217,8 +216,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidDuration();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidDuration();
     }
 
     @DisplayName("Покупка тура при вводе в поле месяц нулей")
@@ -229,8 +228,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле месяц букв")
@@ -241,8 +240,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле месяц более 2х цифр")
@@ -253,8 +252,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidDuration();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidDuration();
     }
 
     @DisplayName("Ввод невалидного значения в поле год")
@@ -265,8 +264,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getInvalidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidYear();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidYear();
     }
 
     @DisplayName("Покупка тура при вводе в поле год нулей")
@@ -277,8 +276,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getZeroValue();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле год букв")
@@ -289,8 +288,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValueText();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле год более 2х цифр")
@@ -301,8 +300,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getDurationOverLimit();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     // Проверка поля "Имя"
@@ -315,8 +314,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getInvalidOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Отправка пустой формы поля имя")
@@ -327,8 +326,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getEmptyValue();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitNecessaryFillOutField();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitNecessaryFillOutField();
     }
 
     @DisplayName("Покупка тура при вводе в поле имя цифр")
@@ -339,8 +338,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getOwnerNumbers();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле имя букв в нижнем регистре")
@@ -351,8 +350,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getOwnerLowerCase();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле имя кириллицы")
@@ -363,8 +362,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getInvalidOwnerRus();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле имени и фамилии владельца без пробелов")
@@ -375,8 +374,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getDataWithoutSpaces();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле имя одной буквы")
@@ -387,8 +386,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getUnderLimitOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле имя имени из 20 букв")
@@ -399,8 +398,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getOverLimitOwner();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле имя только фамилии")
@@ -411,8 +410,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getOwnerOnlySurname();
         var cvc = DataHelper.getValidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     // Проверка поля "CVC"
@@ -425,8 +424,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getInvalidCvc();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Отправка пустой формы поля CVC")
@@ -437,8 +436,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getEmptyValue();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitNecessaryFillOutField();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitNecessaryFillOutField();
     }
 
     @DisplayName("Покупка тура при вводе в поле CVC нулей")
@@ -449,8 +448,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getZeroCvv();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле CVC текста")
@@ -461,8 +460,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getValueText();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
     @DisplayName("Покупка тура при вводе в поле CVC более 3х цифр")
@@ -473,8 +472,8 @@ public class PaymentByCardTests {
         var year = DataHelper.getValidYear();
         var owner = DataHelper.getValidOwner();
         var cvc = DataHelper.getCvcOverLimit();
-        paymentPage.fillOutFields(cardNumber, month, year, owner, cvc);
-        paymentPage.waitInvalidFormat();
+        creditPage.fillOutFields(cardNumber, month, year, owner, cvc);
+        creditPage.waitInvalidFormat();
     }
 
 }

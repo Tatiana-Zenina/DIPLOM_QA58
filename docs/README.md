@@ -21,8 +21,8 @@ ___
 ### Документация по проекту
 
 1. [План автоматизации тестирования](https://github.com/Tatiana-Zenina/DIPLOM_QA58/blob/main/docs/Plan.md)
-2. [Отчёт по итогам тестирования]()
-3. [Отчёт по итогам автоматизации]()
+2. [Отчёт по итогам тестирования](https://github.com/Tatiana-Zenina/DIPLOM_QA58/blob/main/docs/Report.md)
+3. [Отчёт по итогам автоматизации](https://github.com/Tatiana-Zenina/DIPLOM_QA58/blob/main/docs/Summary.md)
 
 
 ### Запуск приложения
@@ -40,12 +40,10 @@ ___
    ```
     java "-Dspring.datasource.url=jdbc:mysql://localhost:3306/app" -jar artifacts/aqa-shop.jar
 
-   ```
 * Для PostgreSQL:
    ```
     java "-Dspring.datasource.url=jdbc:postgresql://localhost:5432/app" -jar artifacts/aqa-shop.jar
-  
-   ```
+
 ### Запуск тестов
 
 В новой вкладке терминала запустить тесты:

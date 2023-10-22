@@ -66,7 +66,7 @@ public class PaymentByCreditTests {
         driver = null;
     }
 
-    @DisplayName("Покупка тура с вводом валидных данных картой со статусом approved")
+    @DisplayName("Покупка тура в кредит с вводом валидных данных (картой со статусом APPROVED)")
     @Test// №1
     void shouldApproveFirstCard() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -81,7 +81,7 @@ public class PaymentByCreditTests {
         assertEquals(expected, actual);
     }
 
-    @DisplayName("Отказ в покупке тура при вводе невалидных данных")
+    @DisplayName("Отказ в покупке тура в кредит при вводе невалидных данных (карты со статусом DECLINED)")
     @Test//№2
     void shouldRejectSecondCard() {
         var cardNumber = DataHelper.getSecondCardNumber();
@@ -96,10 +96,10 @@ public class PaymentByCreditTests {
         Assertions.assertEquals(expected, actual);
     }
 
-    // Проверка поля "Номер"
+    // Проверка поля "НОМЕР КАРТЫ"
 
-    @DisplayName("Отправка пустой формы поля номер карты")
-    @Test//#3
+    @DisplayName("Отправка пустой формы поля НОМЕР КАРТЫ при покупке тура в кредит")
+    @Test//№3
     void shouldRejectEmptyNumberCard() {
         var cardNumber = DataHelper.getEmptyValue();
         var month = DataHelper.getValidMonth();
@@ -110,7 +110,7 @@ public class PaymentByCreditTests {
         creditPage.waitNecessaryFillOutField();
     }
 
-    @DisplayName("Покупка тура при вводе в поле номер карты текста")
+    @DisplayName("Покупка тура в кредит при вводе в поле НОМЕР КАРТЫ текста")
     @Test//№4
     void checkingCardWithText() {
         var cardNumber = DataHelper.getValueText();
@@ -122,9 +122,9 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле номер карты неполных данных")
+    @DisplayName("Покупка тура в кредит при вводе в поле НОМЕР КАРТЫ неполных данных")
     @Test//№5
-    void checkingIncompleteData() { /*Покупка тура при вводе неполных данных*/
+    void checkingIncompleteData() {
         var cardNumber = DataHelper.getCardNumberIncomplete();
         var month = DataHelper.getIncompleteMonth();
         var year = DataHelper.getIncompleteYear();
@@ -134,7 +134,7 @@ public class PaymentByCreditTests {
         creditPage.waitNecessaryFillOutField();
     }
 
-    @DisplayName("Покупка тура при вводе в поле номер карты нулей")
+    @DisplayName("Покупка тура в кредит при вводе в поле НОМЕР КАРТЫ нулей")
     @Test//№6
     void checkingCardNumberZero() {
         var cardNumber = DataHelper.getCardNumberZero();
@@ -146,7 +146,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле номер карты одинаковых цифр")
+    @DisplayName("Покупка тура в кредит при вводе в поле НОМЕР КАРТЫ одинаковых цифр")
     @Test//№7
     void checkingCardNumberRequestedData() {
         var cardNumber = DataHelper.getCardNumberNotExisting();
@@ -158,7 +158,7 @@ public class PaymentByCreditTests {
         creditPage.expectRejectionFromBank();
     }
 
-    @DisplayName("Покупка тура при вводе в поле номер карты только 4 цифр")
+    @DisplayName("Покупка тура в кредит при вводе в поле НОМЕР КАРТЫ только 4 цифр")
     @Test//№8
     void checkingCardNumberUnderLimit() {
         var cardNumber = DataHelper.getCardNumberUnderLimit();
@@ -170,7 +170,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле номер карты 17 цифр")
+    @DisplayName("Покупка тура в кредит при вводе в поле НОМЕР КАРТЫ 17 цифр")
     @Test//№9
     void checkingCardNumberOverLimit() {
         var cardNumber = DataHelper.getCardNumberOverLimit();
@@ -182,9 +182,9 @@ public class PaymentByCreditTests {
         creditPage.expectApprovalFromBank();
     }
 
-    // Проверка поля "Дата"
+    // Проверка полей "ДАТА"
 
-    @DisplayName("Отправка пустой формы поля месяц")
+    @DisplayName("Отправка пустой формы поля МЕСЯЦ при покупке тура в кредит")
     @Test//№10
     void shouldRejectEmptyMonth() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -196,7 +196,7 @@ public class PaymentByCreditTests {
         creditPage.waitNecessaryFillOutField();
     }
 
-    @DisplayName("Отправка пустой формы поля год")
+    @DisplayName("Отправка пустой формы поля ГОД при покупке тура в кредит")
     @Test//№11
     void shouldRejectEmptyYear() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -208,7 +208,7 @@ public class PaymentByCreditTests {
         creditPage.waitNecessaryFillOutField();
     }
 
-    @DisplayName("Ввод невалидного значения в поле месяц")
+    @DisplayName("Ввод невалидного значения в поле МЕСЯЦ при покупке тура в кредит")
     @Test//№12
     void shouldRejectInvalidMonth() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -220,7 +220,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidDuration();
     }
 
-    @DisplayName("Покупка тура при вводе в поле месяц нулей")
+    @DisplayName("Покупка тура в кредит при вводе в поле МЕСЯЦ нулей")
     @Test//№13
     void shouldRejectZeroMonth() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -232,7 +232,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле месяц букв")
+    @DisplayName("Покупка тура в кредит при вводе в поле МЕСЯЦ букв")
     @Test//№14
     void checkingMonthWithText() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -244,7 +244,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле месяц более 2х цифр")
+    @DisplayName("Покупка тура в кредит при вводе в поле МЕСЯЦ более 2х цифр")
     @Test//№15
     void checkingMonthOverLimit() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -256,7 +256,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidDuration();
     }
 
-    @DisplayName("Ввод невалидного значения в поле год")
+    @DisplayName("Ввод невалидного значения в поле ГОД при покупке тура в кредит")
     @Test//№16
     void shouldRejectInvalidYear() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -268,7 +268,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidYear();
     }
 
-    @DisplayName("Покупка тура при вводе в поле год нулей")
+    @DisplayName("Покупка тура в кредит при вводе в поле ГОД нулей")
     @Test//№17
     void shouldRejectZeroYear() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -280,7 +280,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле год букв")
+    @DisplayName("Покупка тура в кредит при вводе в поле ГОД букв")
     @Test//№18
     void checkingYearWithText() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -292,7 +292,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле год более 2х цифр")
+    @DisplayName("Покупка тура в кредит при вводе в поле ГОД более 2х цифр")
     @Test //№19
     void checkingYearOverLimit() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -304,9 +304,9 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    // Проверка поля "Имя"
+    // Проверка поля "ВЛАДЕЛЕЦ"
 
-    @DisplayName("Ввод невалидного значения в поле имя")
+    @DisplayName("Ввод невалидного значения в поле ВЛАДЕЛЕЦ при покупке тура в кредит")
     @Test //№20
     void checkingOwnerInvalid() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -318,7 +318,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Отправка пустой формы поля имя")
+    @DisplayName("Отправка пустой формы поля ВЛАДЕЛЕЦ при покупке тура в кредит")
     @Test //№21
     void shouldRejectEmptyOwner() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -330,9 +330,9 @@ public class PaymentByCreditTests {
         creditPage.waitNecessaryFillOutField();
     }
 
-    @DisplayName("Покупка тура при вводе в поле имя цифр")
+    @DisplayName("Покупка тура в кредит при вводе в поле ВЛАДЕЛЕЦ цифр")
     @Test //№22
-    void checkingOwnerWithNumbers() { /*Покупка тура при вводе цифр в поле владелец*/
+    void checkingOwnerWithNumbers() {
         var cardNumber = DataHelper.getFirstCardNumber();
         var month = DataHelper.getValidMonth();
         var year = DataHelper.getValidYear();
@@ -342,7 +342,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле имя букв в нижнем регистре")
+    @DisplayName("Покупка тура в кредит при вводе в поле ВЛАДЕЛЕЦ букв в нижнем регистре")
     @Test //№23
     void checkingOwnerLowerCase() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -354,7 +354,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле имя кириллицы")
+    @DisplayName("Покупка тура в кредит при вводе в поле ВЛАДЕЛЕЦ кириллицы")
     @Test //№24
     void checkingOwnerRus() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -366,7 +366,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле имени и фамилии владельца без пробелов")
+    @DisplayName("Покупка тура в кредит при вводе в поле ВЛАДЕЛЕЦ имени и фамилии без пробелов")
     @Test //№25
     void checkingOwnerWithoutSpaces() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -378,7 +378,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле имя одной буквы")
+    @DisplayName("Покупка тура в кредит при вводе в поле ВЛАДЕЛЕЦ одной буквы")
     @Test //№26
     void checkingOwnerUnderLimit() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -390,7 +390,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле имя имени из 20 букв")
+    @DisplayName("Покупка тура в кредит при вводе в поле ВЛАДЕЛЕЦ имени из 20 букв")
     @Test //№27
     void checkingOwnerOverLimit() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -402,9 +402,9 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле имя только фамилии")
+    @DisplayName("Покупка тура в кредит при вводе в поле ВЛАДЕЛЕЦ только фамилии")
     @Test //№28
-    void checkingOwnerOnlySurname() { /*Покупка тура при вводе только фамилии в поле владельца*/
+    void checkingOwnerOnlySurname() {
         var cardNumber = DataHelper.getFirstCardNumber();
         var month = DataHelper.getValidMonth();
         var year = DataHelper.getValidYear();
@@ -414,9 +414,9 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    // Проверка поля "CVC"
+    // Проверка поля "CVC/CVV"
 
-    @DisplayName("Ввод невалидного значения в поле CVC")
+    @DisplayName("Ввод невалидного значения в поле CVC/CVV при покупке тура в кредит")
     @Test //№29
     void shouldRejectInvalidCvc() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -428,7 +428,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Отправка пустой формы поля CVC")
+    @DisplayName("Отправка пустой формы поля CVC/CVV при покупке тура в кредит")
     @Test //№30
     void shouldRejectEmptyCvc() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -440,7 +440,7 @@ public class PaymentByCreditTests {
         creditPage.waitNecessaryFillOutField();
     }
 
-    @DisplayName("Покупка тура при вводе в поле CVC нулей")
+    @DisplayName("Покупка тура в кредит при вводе в поле CVC/CVV нулей")
     @Test //№31
     void shouldRejectZeroCvc() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -452,7 +452,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле CVC текста")
+    @DisplayName("Покупка тура в кредит при вводе в поле CVC/CVV текста")
     @Test //№32
     void checkingCVVWithText() {
         var cardNumber = DataHelper.getFirstCardNumber();
@@ -464,7 +464,7 @@ public class PaymentByCreditTests {
         creditPage.waitInvalidFormat();
     }
 
-    @DisplayName("Покупка тура при вводе в поле CVC более 3х цифр")
+    @DisplayName("Покупка тура в кредит при вводе в поле CVC/CVV более 3х цифр")
     @Test //№33
     void checkingCVVOverLimit() {
         var cardNumber = DataHelper.getFirstCardNumber();

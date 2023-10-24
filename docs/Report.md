@@ -15,12 +15,8 @@
 
 ## При подключении к СУБД MySQL
 
-![postgrNew](https://github.com/Tatiana-Zenina/DIPLOM_QA58/assets/125150986/51049d20-9d30-41db-a76a-85cd7947b7f8)
-
 
 ## При подключении к СУБД PostgreSQL
-
-![mysqlnew](https://github.com/Tatiana-Zenina/DIPLOM_QA58/assets/125150986/b13849d0-48dc-4a2b-9c29-b23ed63f2852)
 
 
 ### Соотношение успешных и проваленных тестов

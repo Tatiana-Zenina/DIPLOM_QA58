@@ -15,11 +15,13 @@
 
 ## При подключении к СУБД MySQL
 
-![mysql](https://github.com/Tatiana-Zenina/DIPLOM_QA58/assets/125150986/f95c4a9f-7950-4f33-b959-869e90307ee7)
+![postgrNew](https://github.com/Tatiana-Zenina/DIPLOM_QA58/assets/125150986/51049d20-9d30-41db-a76a-85cd7947b7f8)
+
 
 ## При подключении к СУБД PostgreSQL
 
-![postgr](https://github.com/Tatiana-Zenina/DIPLOM_QA58/assets/125150986/b8cda5d5-6da2-4dc5-8271-55516b7d1c1b)
+![mysqlnew](https://github.com/Tatiana-Zenina/DIPLOM_QA58/assets/125150986/b13849d0-48dc-4a2b-9c29-b23ed63f2852)
+
 
 ### Соотношение успешных и проваленных тестов
 

@@ -151,13 +151,5 @@ public class DataHelper {
         Faker faker = new Faker(new Locale("ru"));
         return faker.name().fullName();
     }
-
-    public static String getPastMonth() {
-        LocalDate localDate = LocalDate.now().minusMonths(1);
-        return String.format("%02d", localDate.getMonthValue());
-    }
-
-    public static String getThisYear() {
-        return String.format("%ty", Year.now());
-    }
+    
 }

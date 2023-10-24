@@ -25,9 +25,7 @@ allure {
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
-    testImplementation 'org.seleniumhq.selenium:selenium-java:4.8.3'
-    testImplementation 'com.codeborne:selenide:6.13.0'
-    testImplementation("io.github.bonigarcia:webdrivermanager:5.5.3")
+    testImplementation 'com.codeborne:selenide:6.19.1'
     testImplementation 'mysql:mysql-connector-java:8.0.30'
     testImplementation 'org.postgresql:postgresql:42.5.1'
     testImplementation 'com.github.javafaker:javafaker:1.0.2'

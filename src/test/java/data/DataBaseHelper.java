@@ -1,17 +1,12 @@
 package data;
 
-
-import lombok.Data;
 import lombok.SneakyThrows;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.junit.jupiter.api.Assertions;
-
-
 
 
 public class DataBaseHelper {
@@ -58,19 +53,5 @@ public class DataBaseHelper {
         runner.execute(conn, orders);
     }
 
-    @SneakyThrows
-    public static void assertDbEmpty() {
-        String sql = "Select count(*) from credit_request_entity;";
-        String sql1 = "Select count(*) from order_entity;";
-        String sql2 = "Select count(*) from payment_entity;";
-        QueryRunner runner = new QueryRunner();
-        Connection conn = getConnection();
-        Long count0 = runner.query(conn, sql, new ScalarHandler<>());
-        Assertions.assertEquals(0, count0);
-        Long count1 = runner.query(conn, sql1, new ScalarHandler<>());
-        Assertions.assertEquals(0, count1);
-        Long count2 = runner.query(conn, sql2, new ScalarHandler<>());
-        Assertions.assertEquals(0, count2);
-    }
 }
 

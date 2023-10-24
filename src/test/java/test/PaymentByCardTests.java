@@ -3,7 +3,6 @@ package test;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DataBaseHelper;
 import data.DataHelper;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import page.MainPage;
@@ -11,10 +10,6 @@ import page.PaymentPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,31 +20,16 @@ import org.junit.jupiter.api.DisplayName;
 
 public class PaymentByCardTests {
 
-    private  WebDriver driver;
-
     MainPage mainPage;
     PaymentPage paymentPage;
 
     @BeforeAll
     static void setUpAll() {
-        System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
-        // ChromeOptions options = new ChromeOptions();
-        // options.addArguments("--disable-dev-shm-usage");
-        // options.addArguments("--no-sandbox");
-        // options.addArguments("--headless");
-        // driver = new ChromeDriver(options);
-        WebDriverManager.chromedriver().setup();
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
     @BeforeEach
     void shouldOpenWeb() {
-        // driver = new ChromeDriver();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--headless");
-        driver = new ChromeDriver(options);
         DataBaseHelper.cleanDataBase();
         mainPage = open("http://localhost:8080", MainPage.class);
         paymentPage = mainPage.buyWithoutCredit();
@@ -58,12 +38,6 @@ public class PaymentByCardTests {
     @AfterAll
     static void tearDownAll() {
         SelenideLogger.removeListener("allure");
-    }
-
-    @AfterEach
-    void tearDown() {
-        driver.quit();
-        driver = null;
     }
 
     @DisplayName("Покупка тура с вводом валидных данных (картой со статусом APPROVED)")

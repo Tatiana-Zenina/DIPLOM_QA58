@@ -3,7 +3,6 @@ package test;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import data.DataBaseHelper;
 import data.DataHelper;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import page.CreditPage;
@@ -12,9 +11,6 @@ import page.MainPage;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,31 +21,16 @@ import org.junit.jupiter.api.DisplayName;
 
 public class PaymentByCreditTests {
 
-    private  WebDriver driver;
-
     MainPage mainPage;
     CreditPage creditPage;
 
     @BeforeAll
     static void setUpAll() {
-        System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
-        // ChromeOptions options = new ChromeOptions();
-        // options.addArguments("--disable-dev-shm-usage");
-        // options.addArguments("--no-sandbox");
-        // options.addArguments("--headless");
-        // driver = new ChromeDriver(options);
-        WebDriverManager.chromedriver().setup();
         SelenideLogger.addListener("allure", new AllureSelenide());
     }
 
     @BeforeEach
     void shouldCleanDataBaseAndOpenWeb() {
-        // driver = new ChromeDriver();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--headless");
-        driver = new ChromeDriver(options);
         DataBaseHelper.cleanDataBase();
         mainPage = open("http://localhost:8080", MainPage.class);
         creditPage = mainPage.buyWithCredit();
@@ -60,11 +41,6 @@ public class PaymentByCreditTests {
         SelenideLogger.removeListener("allure");
     }
 
-    @AfterEach
-    void tearDown() {
-        driver.quit();
-        driver = null;
-    }
 
     @DisplayName("Покупка тура в кредит с вводом валидных данных (картой со статусом APPROVED)")
     @Test// №1
